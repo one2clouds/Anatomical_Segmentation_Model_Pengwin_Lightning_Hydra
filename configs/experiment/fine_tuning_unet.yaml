@@ -1,0 +1,31 @@
+# @package _global_
+defaults:
+  - override /data: pelvic_frature.yaml
+  - override /model: unet.yaml
+  - override /callbacks: default.yaml
+  - override /trainer: default.yaml
+  - override /logger: wandb.yaml
+
+experiment_name: unet_model_training
+
+trainer:
+  min_epochs: 200
+  max_epochs: 5000
+  gradient_clip_val: 0.5
+  accelerator: gpu
+  log_every_n_steps: 1
+
+logger:
+  wandb:
+    project: pelvic_frac_segmentation
+    tags: ${tags}
+    name: ${experiment_name}
+    
+tags: [ UNet ]
+
+ckpt_path_for_finetuning: "/home/shirshak/test_model_performance_1st_model/resources/CTPelvic1K_Models/fold_0/3d_fullres/model_best.model"
+
+
+
+# TO RUN THE MODEL AGAIN 
+# python src/train.py experiment=unet.yaml experiment_name=unet_model_training ckpt_path="/home/shirshak/lightning-hydra-template/logs/train/runs/unet_model_training/checkpoints/last.ckpt"

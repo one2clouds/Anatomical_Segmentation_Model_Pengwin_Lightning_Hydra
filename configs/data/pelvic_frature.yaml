@@ -1,0 +1,7 @@
+_target_: src.data.pelvic_frac_datamodule.PelvicFracModule
+# data_dir: ${paths.data_dir}
+batch_size: 4 # Needs to be divisible by the number of devices (e.g., if in a distributed setup)
+num_workers: 0
+pin_memory: False
+num_classes: 4 # background, sacrum_fragment, left_hipbone_fragment, right_hipbone_fragment
+# this is the out_channels and should be same as unet_yaml file

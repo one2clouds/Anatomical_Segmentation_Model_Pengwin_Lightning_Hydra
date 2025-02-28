@@ -1,0 +1,52 @@
+# @package _global_
+defaults:
+  - override /data: pelvic_frature.yaml
+  - override /model: unet.yaml
+  - override /callbacks: default.yaml
+  - override /trainer: default.yaml
+  - override /logger: wandb.yaml
+
+experiment_name: unet_model_training
+
+trainer:
+  min_epochs: 200
+  max_epochs: 5000
+  gradient_clip_val: 0.5
+  accelerator: gpu
+
+logger:
+  wandb:
+    project: pelvic_frac_segmentation
+    tags: ${tags}
+    name: ${experiment_name}
+    
+tags: [ UNet ]
+
+
+# TO RUN THE MODEL AGAIN 
+# python src/train.py experiment=unet.yaml experiment_name=unet_model_training ckpt_path="/home/shirshak/lightning-hydra-template/logs/train/runs/unet_model_training/checkpoints/last.ckpt"
+
+
+
+
+# img_mask_transforms:
+#   _target_: monai.transforms.Compose
+#   transforms:
+#     - _target_: monai.transforms.LoadImaged
+#       keys: ["image", "label"]
+#     - _target_: monai.transforms.EnsureChannelFirstd
+#       keys: ["image", "label"]
+#     - _target_: monai.transforms.EnsureTyped
+#       keys: ["image", "label"]
+#     - _target_: monai.transforms.Orientationd
+#       keys: ["image", "label"]
+#       axcodes: "RAS"
+#     - _target_: monai.transforms.Spacingd
+#       keys: ["image", "label"]
+#       pixdim: (1.0, 1.0, 1.0)
+#       mode: ("bilinear", "nearest")
+#     - _target_: monai.transforms.ResizeWithPadOrCropd
+#       keys: ["image", "label"]
+#       spatial_size: (128,128,128)
+#       mode: ("bilinear", "nearest")
+
